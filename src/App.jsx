@@ -56,6 +56,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/vision" element={<Vision />} />
         <Route path="/endpoints" element={<EndPoints />} />
+        <Route path="*" element={<h1>404: Page Not Found</h1>} />
+
       </Routes>
     </Router>
   );
