@@ -1,6 +1,7 @@
 import Container from "../components/Container";
 import styled from "styled-components";
 
+// Styled-components for table design
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -30,47 +31,74 @@ export default function Endpoints() {
     <Container>
       <h1>API Endpoints</h1>
       <p>
-        The primary objective of this project is to design and develop an
-        efficient online API that will enable users to seamlessly retrieve and
-        compare loan offerings from a wide array of banks. This API will
-        function as a comprehensive aggregator, integrating data from numerous
-        banks, providing users with detailed and up-to-date information on
-        available loans. By connecting to multiple banks' systems, the API will
-        offer a centralized platform where users can access critical loan
-        details such as interest rates, loan amounts, repayment terms, and
-        processing fees, all in real time. The API will be designed to cater to
-        users looking for personal loans. It will simplify the process of
-        finding the most suitable financial products by allowing users to filter
-        and search based on specific criteria, such as loan type (personal,
-        home, auto, business), loan tenure, interest rates (fixed or variable),
-        and eligibility requirements. Users will also be able to view detailed
-        terms and conditions for each loan, including any special promotions or
-        flexible repayment plans that may be available.
+        This React application documents an API designed for users to retrieve and compare loan offers across various banks. The API integrates multiple banks to provide real-time data on loans, catering specifically to personal loans and other financial products. Users can filter loans by criteria such as type, interest rates, and eligibility requirements.
       </p>
+
+      {/* API Endpoints Table */}
       <Table>
         <thead>
           <TableRow>
-            <TableHeader>Metode</TableHeader>
+            <TableHeader>Method</TableHeader>
             <TableHeader>URL</TableHeader>
             <TableHeader>Request Body</TableHeader>
             <TableHeader>Response</TableHeader>
-            <TableHeader>Fejl</TableHeader>
+            <TableHeader>Error Example</TableHeader>
           </TableRow>
         </thead>
         <tbody>
+          {/* Documented endpoint examples */}
           <TableRow>
             <TableCell>GET</TableCell>
-            <TableCell>/api/loans</TableCell>
-            <TableCell>Ingen</TableCell>
-            <TableCell>[loan, loan, ...]</TableCell>
-            <TableCell>{`{ "status": 404, "msg": "Ingen indhold fundet" }`}</TableCell>
+            <TableCell>/api/loan/offers/{'{requestid}'}</TableCell>
+            <TableCell>None</TableCell>
+            <TableCell>
+              {`{
+  "loanOffers": [
+    {
+      "bankName": "Fake Bank",
+      "interestRate": 3.5,
+      "loanType": "HOUSING_LOAN",
+      "loanAmount": 200000,
+      "duration": 120
+    }
+  ]
+}`}
+            </TableCell>
+            <TableCell>{`{ "status": 404, "msg": "No loan offers found for this request" }`}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>POST</TableCell>
-            <TableCell>/api/loans</TableCell>
-            <TableCell>{`{ "amount": 10000, "type": "car" }`}</TableCell>
-            <TableCell>{`{ "loanId": 1, "status": "approved" }`}</TableCell>
+            <TableCell>/api/loan/request</TableCell>
+            <TableCell>{`{
+  "amount": 200000,
+  "duration": 120,
+  "loanType": "HOUSING_LOAN"
+}`}</TableCell>
+            <TableCell>{`{
+  "loanOffers": [
+    {
+      "bankName": "Fake Bank",
+      "interestRate": 3.5,
+      "loanAmount": 200000,
+      "duration": 120
+    }
+  ]
+}`}</TableCell>
             <TableCell>{`{ "status": 400, "msg": "Invalid data" }`}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>POST</TableCell>
+            <TableCell>/api/bank</TableCell>
+            <TableCell>{`{
+  "name": "New Bank",
+  "interestRate": 4.0,
+  "minLoanAmount": 50000,
+  "maxLoanAmount": 300000,
+  "loanDuration": 180,
+  "loanType": "CAR_LOAN"
+}`}</TableCell>
+            <TableCell>{`{ "status": 201, "msg": "Bank added successfully" }`}</TableCell>
+            <TableCell>{`{ "status": 404, "msg": "Field ‘xxx’ is required" }`}</TableCell>
           </TableRow>
         </tbody>
       </Table>
